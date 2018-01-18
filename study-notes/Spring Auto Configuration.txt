@@ -1,0 +1,24 @@
+Spring DevTools --> traz funcionalidades para o desenvolvimento
+|--> Restart automático assim que detecta-se qualquer mudança no classpath
+|--> Reduz o tempo de restart da aplicação
+|--> <optional>true</optional> (POM) --> Não é incluída nos outros projetos
+
+Springboot --> Spring + Auto Configuration
+
+@Configuration
+@ComponentScan
+@EnableAutoConfiguration
+
+Spring faz autoconfiguration baseado na presença ou ausência de um jar, bean, property
+
+Exclusão de configurações não necessárias --> exclui tudo ou nada
+|--> Apenas quando não vai necessitar da configuração
+
+@SpringBootApplication( exclude = {JacksonAutoConfiguration.class} )
+			   |--> Exclui a autoConfiguration da classe passada no array
+
+@Conditionals --> Um monte de condições devem estar presentes para um bean se registrar
+
+mudar o Run Configuration default do springboot no eclipse --> clique no executável, run as, run configurations
+
+

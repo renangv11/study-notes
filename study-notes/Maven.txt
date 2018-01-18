@@ -1,0 +1,72 @@
+Maven
+---> Build Tool
+---> Principal uso: Gerenciar Dependências. Ele baixa todos os itens que a dependência possui. <---
+---> Usado para criar um artefato (pensar ele como um Jar, arquivo word, arquivo zip).
+	---> Maven possui um número de versão relacionado com cada componente.
+	---> Consegue gerar: jar, documentação, arquivos da IDE, etc.
+--->Contém tudo o que vc precisa para o seu ambiente.
+--->Muito útil para versionar o código.
+
+<group ID> ---> com.nomeDaOrganização
+<artifact ID> ---> nomeDoProjeto
+<version> ---> Define a versão da nossa aplicação
+SNAPSHOT ---> Versão anterior da que vai ser lançada. A diferença é que a versão snapshot pode receber um update depois, e continuar a mesma versão.
+<modelVersion> ---> Versão do XML que estamos usando
+<packaging> ---> define se o packaging vai ser um jar, rar, war, etc...
+
+pom.xml ---> arquivo que o maven busca quando está construindo(build) sua aplicação. 
+
+Instalação correta do Maven (diretório):
+	Development ---> tools---> jdk-----> Local de instalação do Java
+	     |		   |-----> maven---> Local de instalação do Maven
+	     |---------> workspace----> workspace a ser utilizado
+Configurar as variáveis de ambiente JAVA_HOME e MAVEN_HOME no control panel ---> enviroment variables, e colocá-las no path
+
+Estrutura do Maven:
+Por default, ele busca a classe principal no src/main/java
+Compila para um diretório chamado target
+Para testes ---> src/test/java
+
+pom.xml ---> Divido em 4 partes ---> Informações do projeto (groupId, artifactId, version, packaging)
+			        |--> Dependências 
+				|--> Build ---> Definimos os plugins, e a estrutura de diretórios(se vamos sobreescrever os defaults).
+				|--> Repositórios ---> local que é definido de onde baixaremos os artefatos. Repositório usado internamente.
+
+goals ---> clean ---> deleta o diretório target e todo o recurso gerado.
+  |------> compile -> compila o código fonte.
+  |------> package -> Roda o comando compile primeiro, roda todos os testes, e transforma a aplicação no que foi dito no comando package.
+  |------> install -> Roda o comando package e instala ele no seu local repo.
+  |------> deploy --> Roda o comando install e deploya ele em um repositório.
+  Pode-se combinar goals, exemplo ---> mvn clean package
+
+Local repo ---> c:/user/usuario/.m2/repositorys
+   |---> local onde o maven armazena tudo o que é baixado
+   |---> guarda o artefato de acordo com o artefactId, groupId e versão definida na tag <dependency>, evitando duplicação(assim, não precisamos baixar o mesmo jar em todos os projetos que o necessitam).
+   |---> pode ser armazenado em um git
+   
+Build section ---> muda os defaults do local repo.
+<finalName> ---> Define o nome do arquivo final.V
+
+Dependency ---> Precisa ao menos de 3 coisas ---> groupId ---> empacotamento (org.hibernate)
+					|-------> artefactId-> nome do item que vamos utilizar (exemplo: hibernate, spring core)
+					|-------> version----> número da versão
+
+Packaging types ---> jar, war, ear, rar, par
+Transitive Dependencys ---> Razão principal pelo qual as pessoas utilizam o Maven. Pega todas as dependências necessárias de uma dependência declarada.
+Scopes para as dependências---> compile ---> Default
+	|---------------------> provided -->
+        |---------------------> runtime ---> A dependência só é necessária para a execução, e não para a compilação(JDBC jars)
+	|---------------------> test-------> A dependência é apenas necessária para testar a execução, não indo para a compilação e packaging e não vai para o artefato final.
+	|---------------------> system ----> Você terá que especificar o caminho para o JAR. Não recomendado, pois perde todos os benefícios do Maven.
+	|---------------------> Import ----> Usado para o gerenciamento das dependências, lida com compartilhamento de dependências entre diversos POMs.
+
+Repositórios ---> um http onde você pode baixar os arquivos
+	|-------> repositório default do Maven ---> http://repo.maven.apache.org/maven2/ (local padrão dos repositórios Maven, onde ficam 95% das dependências).
+	|-------> É necessário colocar a tag repositório(<repository>) na tag <repositories> caso a dependência esteja fora do repo padrão do maven(link de cima).
+	|-------> <repository> ---> necessário id, name, url. Snapshots e releases (enable true ou false) é opcional, para definir se será baixado apenas realeases ou snapshots.
+
+Repositórios de plugins ----> Idênticos aos repositórios de dependências, porém só existe plugins.
+	|-------------------> Coloca-se os repositórios de plugins na tag <pluginRepositories>.
+Não é recomendado colocar os releases no mesmo repositório que os snapshots/milestones/release candidate/releases police
+
+Todos os goals são plugins configurados que estão dentro do super pom, então é possível sobreescrevê-los

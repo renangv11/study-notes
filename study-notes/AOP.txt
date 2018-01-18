@@ -1,0 +1,8 @@
+Static (Tempo de compilação)
+	|------>Aspect: Como se fosse um filtro. Intercepta um método e faz as ações escritas nele.
+	|------>Pointcut: Onde se define tudo o que será interceptado.
+	|------>Advice: Ação a ser tomada pelo aspecto em um particular join point.
+
+Dynamic (Tempo de execução)
+	|------>Join Point: Possui todas as informações do método que será inteceptado.	
+	|------>Weaving: Momento em que o Join Point é executado (Before, After, etc).
